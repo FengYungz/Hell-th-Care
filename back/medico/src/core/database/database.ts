@@ -5,12 +5,12 @@ import {logger} from '../../config/logger'
 const log = logger({ context: 'DatabaseConnector' })
 export class Database {
 	private static instance: Database | undefined
-	private connectionPool: pg.Pool
+	private connectionPool: pg.Pool | undefined
 	private constructor(private readonly config: pg.PoolConfig) {}
 
 	static getInstance(): Database {
 		if(!this.instance) {
-			this.instance = new Database(env.database)
+			this.instance = new Database({ connectionString: env.database})
 		}
 
 		return this.instance
@@ -22,7 +22,7 @@ export class Database {
 			const conn = await this.connectionPool.connect()
 			log.info('Database connected!')
 			return conn
-		} catch (err) {
+		} catch (err: any) {
 			log.error(`Error connecting to database. Reason: ${err.message}`)
 			throw err
 		}
@@ -30,9 +30,9 @@ export class Database {
 
 	async disconnect(): Promise<void> {
 		try {
-			await this.connectionPool.end()
+			await this.connectionPool?.end()
 			log.info('Database has been disconnected!')
-		} catch (err) {
+		} catch (err: any) {
 			log.error('Error disconnecting to database. Reason:', { err })
 			throw err
 		}
@@ -40,8 +40,8 @@ export class Database {
 	async client(): Promise<pg.PoolClient> {
 		try {
 			return await this.connect()
-		} catch (err) {
-			log.error('Error getting client. Reason:', err)
+		} catch (err: any) {
+			log.error(`Error getting client. Reason: ${err.message}`)
 			throw err
 		}
 	}

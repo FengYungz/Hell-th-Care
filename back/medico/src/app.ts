@@ -31,6 +31,6 @@ async function main() {
 
 main().catch(error => {
 	log.error('catch main application')
-	log.error({ error })
+	log.error(error)
 	process.exit(1)
 })
