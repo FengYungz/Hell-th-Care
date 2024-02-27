@@ -1,5 +1,5 @@
-import {MedicService} from "./service";
+import {MedicService} from './service'
 
 export class MedicController {
-  constructor(private readonly service: MedicService) {}
+	constructor(private readonly service: MedicService) {}
 }
