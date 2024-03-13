@@ -1,9 +1,11 @@
 import React from 'react';
 
+import Login from './pages/login'
+
 function App() {
   return (
     <>
-    <h1>Faça uma interface bonita e funcional</h1>
+    <Login />
     </>
   );
 }
