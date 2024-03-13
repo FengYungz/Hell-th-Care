@@ -21,6 +21,10 @@ async function main() {
 		res.send('Hello World!')
 	})
 
+	app.get('/home', (req, res) => {
+		res.send('Hello World!2')
+	})
+
 
 	app.listen(PORT, () => {
 		console.log(`Server running on port ${PORT}`)
